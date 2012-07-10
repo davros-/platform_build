@@ -371,12 +371,12 @@ def WriteFullOTAPackage(input_zip, output_zip):
       input_tmp=OPTIONS.input_tmp,
       metadata=metadata,
       info_dict=OPTIONS.info_dict)
-  # Remove build date assert 
+  # Remove build date assert
   #if not OPTIONS.omit_prereq:
-  #  ts = GetBuildProp("ro.build.date.utc", input_zip)
+  #  ts = GetBuildProp("ro.build.date.utc", OPTIONS.info_dict)
   #  script.AssertOlderBuild(ts)
 
-  AppendAssertions(script, input_zip)
+  AppendAssertions(script, OPTIONS.info_dict)
   device_specific.FullOTA_Assertions()
   device_specific.FullOTA_InstallBegin()
 
@@ -404,6 +404,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.Mount("/system")
   script.ShowProgress(0.5, 40)
   script.Print("Installing System...")
+
   script.UnpackPackageDir("system", "/system")
 
   script.Print("Creating Symlinks...")
